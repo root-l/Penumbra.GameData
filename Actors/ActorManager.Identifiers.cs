@@ -478,69 +478,29 @@ public partial class ActorManager
     public static bool VerifyPlayerName(ReadOnlySpan<byte> name)
     {
         // Total no more than 20 characters + space.
-        if (name.Length is < 5 or > 21)
+        if (name.Length is < 3 or > 21)
             return false;
 
-        // Forename and surname, no more spaces.
-        var splitIndex = name.IndexOf((byte)' ');
-        if (splitIndex < 0 || name[(splitIndex + 1)..].IndexOf((byte)' ') >= 0)
-            return false;
-
-        return CheckNamePart(name[..splitIndex], 2, 15) && CheckNamePart(name[(splitIndex + 1)..], 2, 15);
+        return true;
     }
 
     /// <summary> Checks SE naming rules. </summary>
     public static bool VerifyPlayerName(ReadOnlySpan<char> name)
     {
         // Total no more than 20 characters + space.
-        if (name.Length is < 5 or > 21)
+        if (name.Length is < 3 or > 21)
             return false;
 
-        // Forename and surname, no more spaces.
-        var splitIndex = name.IndexOf(' ');
-        if (splitIndex < 0 || name[(splitIndex + 1)..].IndexOf(' ') >= 0)
-            return false;
-
-        return CheckNamePart(name[..splitIndex], 2, 15) && CheckNamePart(name[(splitIndex + 1)..], 2, 15);
+        return true;
     }
 
     /// <summary> Checks SE naming rules. </summary>
     public static bool VerifyRetainerName(ReadOnlySpan<byte> name)
-        => CheckNamePart(name, 3, 20);
+        => true;
 
     /// <summary> Checks SE naming rules. </summary>
     public static bool VerifyRetainerName(ReadOnlySpan<char> name)
-        => CheckNamePart(name, 3, 20);
-
-    private static bool CheckNamePart(ReadOnlySpan<char> part, int minLength, int maxLength)
-    {
-        // Each name part at least 2 and at most 15 characters for players, and at least 3 and at most 20 characters for retainers.
-        if (part.Length < minLength || part.Length > maxLength)
-            return false;
-
-        // Each part starting with capitalized letter.
-        if (part[0] is < 'A' or > 'Z')
-            return false;
-
-        // Every other symbol needs to be lowercase letter, hyphen or apostrophe.
-        var last = '\0';
-        for (var i = 1; i < part.Length; ++i)
-        {
-            var current = part[i];
-            if (current is not ('\'' or '-' or (>= 'a' and <= 'z')))
-                return false;
-
-            // Hyphens can not be used in succession, after or before apostrophes or as the last symbol.
-            if (last is '\'' && current is '-')
-                return false;
-            if (last is '-' && current is '-' or '\'')
-                return false;
-
-            last = current;
-        }
-
-        return true;
-    }
+        => true;
 
     private static bool CheckNamePart(ReadOnlySpan<byte> part, int minLength, int maxLength)
     {
