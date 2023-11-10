@@ -286,6 +286,7 @@ public class GamePathParser : IGamePathParser
             "ja" => Dalamud.ClientLanguage.Japanese,
             "de" => Dalamud.ClientLanguage.German,
             "fr" => Dalamud.ClientLanguage.French,
+            "ko" => Dalamud.ClientLanguage.Korean,
             _    => Dalamud.ClientLanguage.English,
         };
         return GameObjectInfo.Icon(fileType, id, hq, hr, language);

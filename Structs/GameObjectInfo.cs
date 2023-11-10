@@ -79,7 +79,7 @@ public struct GameObjectInfo : IComparable
             Variant    = variant,
         };
 
-    public static GameObjectInfo Icon(FileType type, uint iconId, bool hq, bool hr, ClientLanguage lang = ClientLanguage.English)
+    public static GameObjectInfo Icon(FileType type, uint iconId, bool hq, bool hr, ClientLanguage lang = ClientLanguage.Korean)
         => new()
         {
             FileType   = type,
