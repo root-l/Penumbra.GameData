@@ -501,39 +501,29 @@ public partial class ActorManager
     public static bool VerifyPlayerName(ReadOnlySpan<byte> name)
     {
         // Total no more than 20 characters + space.
-        if (name.Length is < 5 or > 21)
+        if (name.Length is < 3 or > 21)
             return false;
 
-        // Forename and surname, no more spaces.
-        var splitIndex = name.IndexOf((byte)' ');
-        if (splitIndex < 0 || name[(splitIndex + 1)..].IndexOf((byte)' ') >= 0)
-            return false;
-
-        return CheckNamePart(name[..splitIndex], 2, 15) && CheckNamePart(name[(splitIndex + 1)..], 2, 15);
+        return true;
     }
 
     /// <summary> Checks SE naming rules. </summary>
     public static bool VerifyPlayerName(ReadOnlySpan<char> name)
     {
         // Total no more than 20 characters + space.
-        if (name.Length is < 5 or > 21)
+        if (name.Length is < 3 or > 21)
             return false;
 
-        // Forename and surname, no more spaces.
-        var splitIndex = name.IndexOf(' ');
-        if (splitIndex < 0 || name[(splitIndex + 1)..].IndexOf(' ') >= 0)
-            return false;
-
-        return CheckNamePart(name[..splitIndex], 2, 15) && CheckNamePart(name[(splitIndex + 1)..], 2, 15);
+        return true;
     }
 
     /// <summary> Checks SE naming rules. </summary>
     public static bool VerifyRetainerName(ReadOnlySpan<byte> name)
-        => CheckNamePart(name, 3, 20);
+        => true;
 
     /// <summary> Checks SE naming rules. </summary>
     public static bool VerifyRetainerName(ReadOnlySpan<char> name)
-        => CheckNamePart(name, 3, 20);
+        => true;
 
     private static bool CheckNamePart(ReadOnlySpan<char> part, int minLength, int maxLength)
     {
